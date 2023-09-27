@@ -1,0 +1,210 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="richTextBox1.Text" xml:space="preserve">
+    <value>COVID-19
+The coronavirus, or COVID-19, is a new strain of coronavirus that has caused a global pandemic. It can cause mild symptoms of the common cold. But people with risk factors, such as old age, diabetes mellitus, heart disease, lung disease, severe immunosuppression,
+
+they are more prone to show severe symptoms of the disease.
+
+Symptoms of COVID-19 are:
+FEVER/CHILLS
+
+COUGH (usually dry)
+
+DYSPHONOA
+
+GENERAL PAYMENT
+
+MYALGAS
+
+HEADACHE
+
+PHARYNGAL
+
+Upper respiratory tract infection symptoms such as nasal discharge, angina and postnasal drip are less common than the other conditions.
+
+The duration of symptoms ranges from 1-14 days.
+
+SIMPLE COOLING
+The common cold usually has milder symptoms compared to the flu and COVID-19. The duration of the common cold lasts from 7-10 days and is mainly limited to the upper respiratory system. The symptoms of the common cold are:
+
+SNEEZE
+
+CUTTING AND COLLAPSING
+
+REVERSE CRASH
+
+IRRITATED PHARYNX
+
+COUGH
+
+IRRITATED EYES
+
+HEADACHE (LESS RARE)
+
+SEASONAL FLU
+Seasonal flu occurs mainly in the winter months. It has an acute onset of severe symptoms and lasts from 5 to 7 days, less than the duration of symptoms of COVID-19. Symptoms include:
+
+FEVER/CHILLS
+
+COUGH
+
+GENERAL PAYMENT
+
+MYALGIA/ARTHRALGIA
+
+Nasal collapse
+
+PHARYNGAL
+
+LEAKAGE EFFECTS
+
+DYSPHONOA
+
+The best way to prevent the flu is to get vaccinated, especially in the fall when the COVID-19 virus is around. Most people experience complete remission of symptoms within a few days with antipyretics, fluids and rest.
+
+SEASONAL ALLERGY
+Seasonal allergy is the reaction of the immune system to a foreign substance, accompanied by a series of symptoms that unfortunately can be compared to the symptoms of COVID-19. "Foreign substances" include various allergens such as pollen, dust, animal dander, various foods, etc. Seasonal allergy often includes upper respiratory symptoms, but without the presence of systemic symptoms. Common symptoms are:
+
+Nasal collapse
+
+SNEEZE
+
+ITCHY NOSE AND EYES
+
+EYE IRRITATION
+
+MILD IRRITATION OF THE PHARYNX
+
+FEVER OCCURS VERY RARELY
+
+Seasonal allergy usually lasts a few weeks or months depending on the allergen.
+
+In conclusion, the new coronavirus very often causes fever, dry cough and shortness of breath and affects the lungs more. It usually does not present with a runny nose unlike the other flu, common cold and allergy cases.
+
+The new coronavirus, COVID-19, has shocked humanity worldwide. It is important to quickly recognize the possible symptoms of the virus, so that we can immediately notify our doctor and do the right diagnostic tests. This way we will be able to deal with the virus and protect ourselves and our loved ones from serious complications.</value>
+  </data>
+  <metadata name="printDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <metadata name="printDocument1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>158, 17</value>
+  </metadata>
+</root>
