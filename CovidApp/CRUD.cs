@@ -18,21 +18,12 @@ namespace CovidApp
     {
         private Model1Container context = new Model1Container();
 
-        private DateTime startDate = new DateTime(2020, 1, 1);
-        private DateTime endDate = new DateTime(2023, 7, 31);
-        protected List<DateTime> dateList = new List<DateTime>();
-        private void GenerateDateList()
-        {
-            for (DateTime date = startDate; date <= endDate; date = date.AddDays(1))
-            {
-                dateList.Add(date);
-            }
-        }
-        private List<Area> areas;
+        internal static DateTime startDate = new DateTime(2020, 1, 1);
+        internal static DateTime endDate = new DateTime(2023, 7, 31);
+
         public CRUD()
         {
             InitializeComponent();
-            GenerateDateList();
         }
         public void jsonObjectToEntity<T>(ref T entity, JObject jsonObject)
         {
@@ -112,6 +103,57 @@ namespace CovidApp
                 context.SaveChanges();
             }
         }
-        
+        private void DeleteData()
+        {
+            List<Area> areas = context.AreaSet.ToList();
+            foreach (var area in areas)
+            {
+                Console.WriteLine(area.Data.Count());
+                List<Data> filteredData = area.Data.Where(d => d.date > endDate).ToList();
+                foreach (var data in filteredData)
+                {
+                    context.DataSet.Remove(data);
+                }
+                context.SaveChanges();
+                Console.WriteLine(area.Data.Count());
+            }
+        }
+        private void UpdateData()
+        {
+            //DeleteData();
+            List<Area> areas = context.AreaSet.ToList();
+
+            string jsonFilePath = "owid-covid-data.json";
+            string json = File.ReadAllText(jsonFilePath);
+            JObject jsonObject = JObject.Parse(json);
+
+            int index = 0;
+            foreach (var property in jsonObject.Properties())
+            {
+                string iso_code = property.Name;
+                Area area = areas[index];
+                //Area area = areas.FirstOrDefault(a => a.iso_code == iso_code);
+
+                JObject areaData = (JObject)property.Value;
+                JToken dataValue = areaData["data"];
+                JObject[] jsonObjects = dataValue.ToObject<JObject[]>();
+                foreach (var dataJsonObject in jsonObjects)
+                {
+                    string dateString = (string)dataJsonObject["date"];
+                    DateTime dateTime = DateTime.ParseExact(dateString, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                    if (dateTime <= endDate)
+                    {
+                        continue;
+                    }
+                    Data data = new Data();
+
+                    jsonObjectToEntity(ref data, dataJsonObject);
+
+                    area.Data.Add(data);
+                }
+                index++;
+                context.SaveChanges();
+            }
+        }
     }
 }

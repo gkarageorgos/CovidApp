@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace CovidApp
 {
-    public partial class Statistics : CRUD
+    public partial class Statistics : Form
     {
         private Menu menuInstance;
         private DataTable dataTable = new DataTable();
@@ -20,6 +20,7 @@ namespace CovidApp
         private List<Area> areas;
         private List<string> areaFields = GetFieldNames(typeof(Area));
         private List<string> dataFields = GetFieldNames(typeof(Data));
+        List<DateTime> dateList = GenerateDateList();
         private static List<string> GetFieldNames(Type type)
         {
             FieldInfo[] fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
@@ -40,6 +41,16 @@ namespace CovidApp
             }
 
             return fieldNames;
+        }
+        private static List<DateTime> GenerateDateList()
+        {
+            List<DateTime> dates = new List<DateTime>();
+
+            for (DateTime date = CRUD.startDate; date <= CRUD.endDate; date = date.AddDays(1))
+            {
+                dates.Add(date);
+            }
+            return dates;
         }
         private void PopulateCheckListBoxes()
         {
