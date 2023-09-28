@@ -19,7 +19,7 @@ namespace CovidApp
         private Model1Container context = new Model1Container();
 
         internal static DateTime startDate = new DateTime(2020, 1, 1);
-        internal static DateTime endDate = new DateTime(2023, 7, 31);
+        internal static DateTime endDate = new DateTime(2023, 8, 31);
 
         public CRUD()
         {
@@ -120,19 +120,19 @@ namespace CovidApp
         }
         private void UpdateData()
         {
-            //DeleteData();
+            DeleteData();
+
             List<Area> areas = context.AreaSet.ToList();
 
             string jsonFilePath = "owid-covid-data.json";
             string json = File.ReadAllText(jsonFilePath);
             JObject jsonObject = JObject.Parse(json);
 
-            int index = 0;
+            int areaIndex = 0;
             foreach (var property in jsonObject.Properties())
             {
-                string iso_code = property.Name;
-                Area area = areas[index];
-                //Area area = areas.FirstOrDefault(a => a.iso_code == iso_code);
+                Area area = areas[areaIndex];
+                Console.WriteLine($"iso_code: {area.iso_code}");
 
                 JObject areaData = (JObject)property.Value;
                 JToken dataValue = areaData["data"];
@@ -151,7 +151,7 @@ namespace CovidApp
 
                     area.Data.Add(data);
                 }
-                index++;
+                areaIndex++;
                 context.SaveChanges();
             }
         }
