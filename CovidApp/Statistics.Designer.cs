@@ -33,22 +33,22 @@ namespace CovidApp
             this.backBbutton = new System.Windows.Forms.Button();
             this.helpButton = new System.Windows.Forms.Button();
             this.viewButton = new System.Windows.Forms.Button();
-            this.panel2 = new System.Windows.Forms.Panel();
+            this.DataPanel = new System.Windows.Forms.Panel();
             this.dataFieldsCheckBox = new System.Windows.Forms.CheckBox();
             this.dataFieldsCheckedListBox = new System.Windows.Forms.CheckedListBox();
             this.dataFieldsLabel = new System.Windows.Forms.Label();
             this.dateCheckBox = new System.Windows.Forms.CheckBox();
             this.dateLabel = new System.Windows.Forms.Label();
             this.dateCheckedListBox = new System.Windows.Forms.CheckedListBox();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.areaPanel = new System.Windows.Forms.Panel();
             this.areaFieldsCheckBox = new System.Windows.Forms.CheckBox();
             this.areaFieldsCheckedListBox = new System.Windows.Forms.CheckedListBox();
             this.areaFieldsLabel = new System.Windows.Forms.Label();
             this.iso_codeCheckBox = new System.Windows.Forms.CheckBox();
             this.iso_codeLabel = new System.Windows.Forms.Label();
             this.iso_codeCheckedListBox = new System.Windows.Forms.CheckedListBox();
-            this.panel2.SuspendLayout();
-            this.panel1.SuspendLayout();
+            this.DataPanel.SuspendLayout();
+            this.areaPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // closeButton
@@ -104,23 +104,23 @@ namespace CovidApp
             this.viewButton.UseVisualStyleBackColor = false;
             this.viewButton.Click += new System.EventHandler(this.viewButton_Click);
             // 
-            // panel2
+            // DataPanel
             // 
-            this.panel2.Controls.Add(this.dataFieldsCheckBox);
-            this.panel2.Controls.Add(this.dataFieldsCheckedListBox);
-            this.panel2.Controls.Add(this.dataFieldsLabel);
-            this.panel2.Enabled = false;
-            this.panel2.Location = new System.Drawing.Point(243, 348);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(381, 302);
-            this.panel2.TabIndex = 40;
+            this.DataPanel.Controls.Add(this.dataFieldsCheckBox);
+            this.DataPanel.Controls.Add(this.dataFieldsCheckedListBox);
+            this.DataPanel.Controls.Add(this.dataFieldsLabel);
+            this.DataPanel.Enabled = false;
+            this.DataPanel.Location = new System.Drawing.Point(243, 348);
+            this.DataPanel.Name = "DataPanel";
+            this.DataPanel.Size = new System.Drawing.Size(381, 302);
+            this.DataPanel.TabIndex = 40;
             // 
             // dataFieldsCheckBox
             // 
             this.dataFieldsCheckBox.AutoSize = true;
             this.dataFieldsCheckBox.Location = new System.Drawing.Point(21, 52);
             this.dataFieldsCheckBox.Name = "dataFieldsCheckBox";
-            this.dataFieldsCheckBox.Size = new System.Drawing.Size(88, 21);
+            this.dataFieldsCheckBox.Size = new System.Drawing.Size(85, 20);
             this.dataFieldsCheckBox.TabIndex = 6;
             this.dataFieldsCheckBox.Text = "Select All";
             this.dataFieldsCheckBox.UseVisualStyleBackColor = true;
@@ -149,7 +149,7 @@ namespace CovidApp
             this.dateCheckBox.AutoSize = true;
             this.dateCheckBox.Location = new System.Drawing.Point(36, 400);
             this.dateCheckBox.Name = "dateCheckBox";
-            this.dateCheckBox.Size = new System.Drawing.Size(88, 21);
+            this.dateCheckBox.Size = new System.Drawing.Size(85, 20);
             this.dateCheckBox.TabIndex = 39;
             this.dateCheckBox.Text = "Select All";
             this.dateCheckBox.UseVisualStyleBackColor = true;
@@ -174,23 +174,23 @@ namespace CovidApp
             this.dateCheckedListBox.TabIndex = 37;
             this.dateCheckedListBox.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.dateCheckedListBox_ItemCheck);
             // 
-            // panel1
+            // areaPanel
             // 
-            this.panel1.Controls.Add(this.areaFieldsCheckBox);
-            this.panel1.Controls.Add(this.areaFieldsCheckedListBox);
-            this.panel1.Controls.Add(this.areaFieldsLabel);
-            this.panel1.Enabled = false;
-            this.panel1.Location = new System.Drawing.Point(243, 10);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(381, 301);
-            this.panel1.TabIndex = 36;
+            this.areaPanel.Controls.Add(this.areaFieldsCheckBox);
+            this.areaPanel.Controls.Add(this.areaFieldsCheckedListBox);
+            this.areaPanel.Controls.Add(this.areaFieldsLabel);
+            this.areaPanel.Enabled = false;
+            this.areaPanel.Location = new System.Drawing.Point(243, 10);
+            this.areaPanel.Name = "areaPanel";
+            this.areaPanel.Size = new System.Drawing.Size(381, 301);
+            this.areaPanel.TabIndex = 36;
             // 
             // areaFieldsCheckBox
             // 
             this.areaFieldsCheckBox.AutoSize = true;
             this.areaFieldsCheckBox.Location = new System.Drawing.Point(25, 48);
             this.areaFieldsCheckBox.Name = "areaFieldsCheckBox";
-            this.areaFieldsCheckBox.Size = new System.Drawing.Size(88, 21);
+            this.areaFieldsCheckBox.Size = new System.Drawing.Size(85, 20);
             this.areaFieldsCheckBox.TabIndex = 6;
             this.areaFieldsCheckBox.Text = "Select All";
             this.areaFieldsCheckBox.UseVisualStyleBackColor = true;
@@ -219,7 +219,7 @@ namespace CovidApp
             this.iso_codeCheckBox.AutoSize = true;
             this.iso_codeCheckBox.Location = new System.Drawing.Point(40, 58);
             this.iso_codeCheckBox.Name = "iso_codeCheckBox";
-            this.iso_codeCheckBox.Size = new System.Drawing.Size(88, 21);
+            this.iso_codeCheckBox.Size = new System.Drawing.Size(85, 20);
             this.iso_codeCheckBox.TabIndex = 35;
             this.iso_codeCheckBox.Text = "Select All";
             this.iso_codeCheckBox.UseVisualStyleBackColor = true;
@@ -254,11 +254,11 @@ namespace CovidApp
             this.Controls.Add(this.backBbutton);
             this.Controls.Add(this.helpButton);
             this.Controls.Add(this.viewButton);
-            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.DataPanel);
             this.Controls.Add(this.dateCheckBox);
             this.Controls.Add(this.dateLabel);
             this.Controls.Add(this.dateCheckedListBox);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.areaPanel);
             this.Controls.Add(this.iso_codeCheckBox);
             this.Controls.Add(this.iso_codeLabel);
             this.Controls.Add(this.iso_codeCheckedListBox);
@@ -266,10 +266,10 @@ namespace CovidApp
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Statistics";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Statistics_FormClosed);
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.DataPanel.ResumeLayout(false);
+            this.DataPanel.PerformLayout();
+            this.areaPanel.ResumeLayout(false);
+            this.areaPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -281,14 +281,14 @@ namespace CovidApp
         private System.Windows.Forms.Button backBbutton;
         private System.Windows.Forms.Button helpButton;
         private System.Windows.Forms.Button viewButton;
-        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel DataPanel;
         private System.Windows.Forms.CheckBox dataFieldsCheckBox;
         private System.Windows.Forms.CheckedListBox dataFieldsCheckedListBox;
         private System.Windows.Forms.Label dataFieldsLabel;
         private System.Windows.Forms.CheckBox dateCheckBox;
         private System.Windows.Forms.Label dateLabel;
         private System.Windows.Forms.CheckedListBox dateCheckedListBox;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel areaPanel;
         private System.Windows.Forms.CheckBox areaFieldsCheckBox;
         private System.Windows.Forms.CheckedListBox areaFieldsCheckedListBox;
         private System.Windows.Forms.Label areaFieldsLabel;

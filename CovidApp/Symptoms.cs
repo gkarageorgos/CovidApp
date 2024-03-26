@@ -32,7 +32,6 @@ namespace CovidApp
 
         private void printButton_Click(object sender, EventArgs e)
         {
-            PrintDialog printDialopg = new PrintDialog();
             if (printDialog1.ShowDialog() == DialogResult.OK)
             {
                 printDocument1.Print();

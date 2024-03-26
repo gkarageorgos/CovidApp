@@ -1,159 +1,247 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace CovidApp
 {
-    public partial class CRUD : Form
+    public class CRUD
     {
         private Model1Container context = new Model1Container();
-
-        internal static DateTime startDate = new DateTime(2020, 1, 1);
-        internal static DateTime endDate = new DateTime(2023, 8, 31);
-
-        public CRUD()
+        private dynamic ConvertJToken(Type propertyType, JToken value)
         {
-            InitializeComponent();
-        }
-        public void jsonObjectToEntity<T>(ref T entity, JObject jsonObject)
-        {
-            foreach (var property in jsonObject.Properties())
+            if (propertyType == typeof(double) || propertyType == typeof(double?))
             {
-                string field = property.Name;
-                JToken value = property.Value;
+                double doubleValue = (double)value;
+                return doubleValue;
+            }
+            else if (propertyType == typeof(int) || propertyType == typeof(int?))
+            {
+                int intValue = Convert.ToInt32((double)value);
+                return intValue;
+            }
+            else if (propertyType == typeof(long) || propertyType == typeof(long?))
+            {
+                long longValue = Convert.ToInt64((double)value);
+                return longValue;
+            }
+            else if (propertyType == typeof(string))
+            {
+                string stringValue = (string)value;
+                return stringValue;
+            }
+            else if (propertyType == typeof(DateTime))
+            {
+                string dateString = (string)value;
+                DateTime dateTimeValue = DateTime.ParseExact(dateString, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                return dateTimeValue;
+            }
+            return value;
+        }
+        public void addData(ref Area area, Dictionary<string, JToken>[] dataDictionaries)
+        {
+            if (dataDictionaries == null)
+                Console.WriteLine("There is no Data");
 
-                PropertyInfo propertyInfo = typeof(T).GetProperty(field);
-                if (propertyInfo == null)
+            foreach (var dataDictionary in dataDictionaries)
+            {
+                Data data = new Data();
+                foreach (var kvp in dataDictionary)
                 {
-                    if (entity is Area area)
-                    {
-                        JObject[] jsonObjects = value.ToObject<JObject[]>();
-                        foreach (var dataJsonObject in jsonObjects)
-                        {
-                            Data data = new Data();
-                            jsonObjectToEntity(ref data, dataJsonObject);
-                            area.Data.Add(data);
-                        }
-                    }
-                }
-                else
-                {
+                    PropertyInfo propertyInfo = typeof(Data).GetProperty(kvp.Key);
                     Type propertyType = propertyInfo.PropertyType;
-                    if (propertyType == typeof(double) || propertyType == typeof(double?))
-                    {
-                        double doubleValue = (double)value;
-                        propertyInfo.SetValue(entity, doubleValue);
-                        Console.WriteLine($"{field}: {doubleValue}");
-                    }
-                    else if (propertyType == typeof(int) || propertyType == typeof(int?))
-                    {
-                        int intValue = Convert.ToInt32((double)value);
-                        propertyInfo.SetValue(entity, intValue);
-                        Console.WriteLine($"{field}: {intValue}");
-                    }
-                    else if (propertyType == typeof(long) || propertyType == typeof(long?))
-                    {
-                        long longValue = Convert.ToInt64((double)value);
-                        propertyInfo.SetValue(entity, longValue);
-                        Console.WriteLine($"{field}: {longValue}");
-                    }
-                    else if (propertyType == typeof(string))
-                    {
-                        string stringValue = (string)value;
-                        propertyInfo.SetValue(entity, stringValue);
-                        Console.WriteLine($"{field}: {stringValue}");
-                    }
-                    else if (propertyType == typeof(DateTime))
-                    {
-                        string dateString = (string)value;
-                        DateTime dateTimeValue = DateTime.ParseExact(dateString, "yyyy-MM-dd", CultureInfo.InvariantCulture);
-                        propertyInfo.SetValue(entity, dateTimeValue);
-                        Console.WriteLine($"{field}: {dateTimeValue}");
-                    }
+                    var value = ConvertJToken(propertyType, kvp.Value);
+                    propertyInfo.SetValue(data, value);
                 }
+                area.Data.Add(data);
+                context.DataSet.Add(data);
             }
+            context.SaveChanges();
         }
-        private void FillDB()
+        public void addArea(string iso_code, Dictionary<string, JToken> areaDictionary, Dictionary<string, JToken>[] dataDictionaries)
         {
-            string jsonFilePath = "owid-covid-data.json";
-            string json = File.ReadAllText(jsonFilePath);
-            JObject jsonObject = JObject.Parse(json);
+            Area area = new Area();
 
-            foreach (var property in jsonObject.Properties())
+            area.iso_code = iso_code;
+            foreach (var kvp in areaDictionary)
             {
-                string iso_code = property.Name;
-                JObject areaData = (JObject)property.Value;
-
-                Area area = new Area();
-                area.iso_code = iso_code;
-                Console.WriteLine($"iso_code: {iso_code}");
-
-                jsonObjectToEntity(ref area, areaData);
-                context.AreaSet.Add(area);
-                context.SaveChanges();
+                PropertyInfo propertyInfo = typeof(Area).GetProperty(kvp.Key);
+                Type propertyType = propertyInfo.PropertyType;
+                var value = ConvertJToken(propertyType, kvp.Value);
+                propertyInfo.SetValue(area, value);
             }
+
+            addData(ref area, dataDictionaries);
+
+            context.AreaSet.Add(area);
+            context.SaveChanges();
         }
-        private void DeleteData()
+        public void DeleteData(DateTime endDate)
         {
-            List<Area> areas = context.AreaSet.ToList();
+            List<Area> areas = GetAreas();
             foreach (var area in areas)
             {
-                Console.WriteLine(area.Data.Count());
+                Console.WriteLine($"iso_code: {area.iso_code}");
+
                 List<Data> filteredData = area.Data.Where(d => d.date > endDate).ToList();
                 foreach (var data in filteredData)
                 {
+                    //area.Data.Remove(data);
                     context.DataSet.Remove(data);
                 }
                 context.SaveChanges();
-                Console.WriteLine(area.Data.Count());
             }
         }
-        private void UpdateData()
+        public List<Data> FindDataByDates(List<Data> datas, DateTime[] dates)
         {
-            DeleteData();
-
-            List<Area> areas = context.AreaSet.ToList();
-
-            string jsonFilePath = "owid-covid-data.json";
-            string json = File.ReadAllText(jsonFilePath);
-            JObject jsonObject = JObject.Parse(json);
-
-            int areaIndex = 0;
-            foreach (var property in jsonObject.Properties())
+            List<Data> matchingData = datas.Where(d => dates.Contains(d.date)).ToList();
+            return matchingData;
+        }
+        public Data FindDataByDate(List<Data> datas, DateTime date)
+        {
+            Data data = datas.FirstOrDefault(d => d.date == date);
+            return data;
+        }
+        public List<Data> FilterDataBeforeDate(List<Data> datas, DateTime dateTime)
+        {
+            return datas.Where(data => data.date < dateTime).ToList();
+        }
+        public List<Area> AreasByISO(List<string> isoCodes, List<Area> areas)
+        {
+            List<Area> filteredAreas = isoCodes
+                .Join(areas, iso => iso, area => area.iso_code, (iso, area) => area)
+                .ToList();
+            return filteredAreas;
+        }
+        //I retrieve the values of the entities for the fieldName field.
+        public List<object> RetrieveFieldValues<T>(List<T> entities, string fieldName)
+        {
+            PropertyInfo propertyInfo = typeof(T).GetProperty(fieldName);
+            List<object> values = entities.Select(t => propertyInfo.GetValue(t)).ToList();
+            return values;
+        }
+        //You retrieve the value of the entity for the fieldName field.
+        public dynamic RetrieveFieldValue<T>(T entity, string fieldName)
+        {
+            var value = RetrieveFieldValues(new List<T> { entity}, fieldName)[0];
+            return value;
+        }
+        //For each field in fieldNames, there corresponds a list of values of the entities for that field.
+        public Dictionary<string, List<object>> RetrieveFields<T>(List<T> entities, string[] fieldNames)
+        {
+            Dictionary<string, List<object>> pairs = new Dictionary<string, List<object>>();
+            foreach (string fieldname in fieldNames)
+                pairs[fieldname] = RetrieveFieldValues(entities, fieldname);
+            return pairs;
+        }
+        //The field names.
+        public static string[] GetFieldNames(Type type)
+        {
+            FieldInfo[] fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            string[] fieldNames = new string[fields.Length];
+            for (int i = 0; i < fields.Length; i++)
             {
-                Area area = areas[areaIndex];
-                Console.WriteLine($"iso_code: {area.iso_code}");
-
-                JObject areaData = (JObject)property.Value;
-                JToken dataValue = areaData["data"];
-                JObject[] jsonObjects = dataValue.ToObject<JObject[]>();
-                foreach (var dataJsonObject in jsonObjects)
+                FieldInfo field = fields[i];
+                // Check for the format <FieldName>k__BackingField
+                if (field.Name.EndsWith(">k__BackingField"))
                 {
-                    string dateString = (string)dataJsonObject["date"];
-                    DateTime dateTime = DateTime.ParseExact(dateString, "yyyy-MM-dd", CultureInfo.InvariantCulture);
-                    if (dateTime <= endDate)
-                    {
-                        continue;
-                    }
-                    Data data = new Data();
-
-                    jsonObjectToEntity(ref data, dataJsonObject);
-
-                    area.Data.Add(data);
+                    // Remove <, >, and "k__BackingField" from the name
+                    string fieldName = field.Name.Substring(1, field.Name.IndexOf(">") - 1);
+                    fieldNames[i] = fieldName;
                 }
-                areaIndex++;
-                context.SaveChanges();
+                else
+                {
+                    fieldNames[i] = field.Name;
+                }
             }
+
+            return fieldNames;
+        }
+        //For each field, there is a list corresponding to the values of the entities for that field.
+        public Dictionary<string, List<object>> RetrieveAllFields<T>(List<T> entities)
+        {
+            string[] allFields = GetFieldNames(typeof(T));
+            Dictionary<string, List<object>> dictionary = RetrieveFields(entities, allFields);
+            return dictionary;
+        }
+        //You retrieve the value of the area for the fieldName field.
+        public dynamic GetFieldFromArea(Area area, string fieldName)
+        {
+            return RetrieveFieldValue(area, fieldName);
+        }
+        //You retrieve the value of the data for the fieldName field.
+        public dynamic GetFieldFromData(Data data, string fieldName)
+        {
+            return RetrieveFieldValue(data, fieldName);
+        }
+        //I retrieve the values of the area from the areas list for the fieldName field.
+        public List<object> GetFieldValuesFromArea(List<Area> areas, string fieldName)
+        {
+            return RetrieveFieldValues(areas, fieldName);
+        }
+        //I retrieve the values of the data from the datas list for the fieldName field.
+        public List<object> GetFieldValuesFromData(List<Data> datas, string fieldName)
+        {
+            return RetrieveFieldValues(datas, fieldName);
+        }
+        //For each field in fieldNames, I retrieve a list of values of the areas for that field.
+        public Dictionary<string, List<object>> GetFieldsValuesFromArea(List<Area> areas, string[] fieldNames)
+        {
+            return RetrieveFields(areas, fieldNames);
+        }
+        //For each field in fieldNames, I retrieve a list of values of the datas for that field.
+        public Dictionary<string, List<object>> GetFieldsValuesFromData(List<Data> datas, string[] fieldNames)
+        {
+            return RetrieveFields(datas, fieldNames);
+        }
+        //For each field of the Area class, there corresponds a list of values of the areas for that field.
+        public Dictionary<string, List<object>> GetAllFieldsValuesFromArea(List<Area> areas)
+        {
+            return RetrieveAllFields(areas);
+        }
+        //For each field of the Data class, there corresponds a list of values of the datas for that field.
+        public Dictionary<string, List<object>> GetAllFieldsValuesFromData(List<Data> datas)
+        {
+            return RetrieveAllFields(datas);
+        }
+
+        public List<DateTime> GetDatesFieldFromData(List<Data> data)
+        {
+            DateTime minDate = data.First().date;
+            DateTime maxDate = data.Last().date;
+            List<DateTime> dateList = GenerateDateList(minDate, maxDate);
+
+            return dateList;
+        }
+        private List<DateTime> GenerateDateList(DateTime startDate, DateTime endDate)
+        {
+            List<DateTime> dates = new List<DateTime>();
+
+            for (DateTime date = startDate; date <= endDate; date = date.AddDays(1))
+            {
+                dates.Add(date);
+            }
+            return dates;
+        }
+
+
+        public List<Data> GetDataForArea(Area area)
+        {
+            List<Data> areaDataList = area.Data.ToList();
+            List<Data> sortedDataList = areaDataList.OrderBy(data => data.date).ToList();
+            return sortedDataList;
+        }
+        public Area GetArea(List<Area> areas, string iso_code)
+        {
+            Area area = areas.FirstOrDefault(a => a.iso_code == iso_code);
+            return area;
+        }
+        public List<Area> GetAreas()
+        {
+            List<Area> areas = context.AreaSet.ToList();
+            return areas;
         }
     }
 }

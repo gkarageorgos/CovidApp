@@ -13,7 +13,7 @@ namespace CovidApp
     public partial class Menu : Form
     {
         private int picturesIndex = 0;
-        private Dictionary<int, string> pictures = new Dictionary<int, string>();
+        private string[] pictures = new string[4];
         public Menu()
         {
             InitializeComponent();
@@ -55,7 +55,7 @@ namespace CovidApp
 
         private void aboutButton_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Made by Gerardi Vasiliki AM:ΜΠΠΛ21007 and Karagewrgos Ioannis AM:ΜΠΠΛ21023");
+            MessageBox.Show("Made by Karageorgos Ioannis AM:ΜΠΠΛ21023");
         }
 
         private void closeButton_Click(object sender, EventArgs e)

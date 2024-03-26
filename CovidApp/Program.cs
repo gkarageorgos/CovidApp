@@ -16,7 +16,7 @@ namespace CovidApp
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MLPipeline());
+            Application.Run(new MLPipeline(iso_code: "USA",dateTime: new DateTime(2021, 9, 18)));
         }
     }
 }
